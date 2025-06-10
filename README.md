@@ -23,4 +23,45 @@ ToDoLy is a simple C# console application that lets you manage tasks with a frie
 ├── MyTask.cs        # Task models and ToDo list logic
 └── README.md        # This file
 
-![ChatGPT Image Jun 10, 2025, 10_13_07 AM](https://github.com/user-attachments/assets/f99a43a1-c169-4567-a328-bc9b3cc4c22d)
+##UML diagram
+
++------------------------+
+|      MyToDoList        |
++------------------------+
+| - Tasks: List<MyTask>  |
+| - SortStyle: string    |
++------------------------+
+| + ShowTaskList()       |
+| + AddTask()            |
+| + Sort(style: string)  |
++------------------------+
+
+           ▲
+           |
+           |
++------------------------+
+|        MyTask          |
++------------------------+
+| - Name: string         |
+| - DueDate: DateTime    |
+| - Project: string      |
+| - Status: ToDoListStatus |
++------------------------+
+| + MyTask(...)          |
+| + ToString(): string   |
++------------------------+
+
++------------------------+
+|   <<enum>> ToDoListStatus |
++------------------------+
+| - Done                 |
+| - NotDone             |
++------------------------+
+
++------------------------+
+|        Program         |
++------------------------+
+| + Main()               |
+| (Handles menu/UI)      |
++------------------------+
+
