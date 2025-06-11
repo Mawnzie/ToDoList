@@ -39,9 +39,16 @@ if (key=='y')
     
     if (File.Exists(jsonfile))
     {
-        json = File.ReadAllText(jsonfile);
-        list = JsonSerializer.Deserialize<MyToDoList>(json);
-        Console.WriteLine("\nTo do list loaded.\n");
+        try
+        {
+            json = File.ReadAllText(jsonfile);
+            list = JsonSerializer.Deserialize<MyToDoList>(json);
+            Console.WriteLine("\nTo do list loaded.\n");
+        } catch  (Exception e)
+        {
+            Console.WriteLine($"Failed to load the to-do list. Error: {e.Message}");
+            goto enterfile;
+        }
     } else
     {
         Console.WriteLine("The file does not exist.\n ");
@@ -190,11 +197,17 @@ optionscreen:
             Console.WriteLine($"The file {savefile} already exists. Would you like to replace it? y/n");
             if(Console.ReadKey().KeyChar == 'y')
             {
-                File.Delete(savefile);
+                try
+                {
+                    File.Delete(savefile);
 
-                // Save to file
-                File.WriteAllText(savefile, JsonSerializer.Serialize(list));
-                Console.WriteLine($"To do list saved successfully as {savefile}.");
+                    // Save to file
+                    File.WriteAllText(savefile, JsonSerializer.Serialize(list));
+                    Console.WriteLine($"To do list saved successfully as {savefile}.");
+                } catch (Exception e)
+                {
+                    Console.WriteLine($"Deleting {savefile} failed with error {e}");
+                }
                 break;
             } else 
             {
@@ -202,8 +215,14 @@ optionscreen:
             }
         } else
         {
-            File.WriteAllText(savefile, JsonSerializer.Serialize(list));
-            Console.WriteLine($"To do list saved successfully as {savefile}.");
+            try
+            {
+                File.WriteAllText(savefile, JsonSerializer.Serialize(list));
+                Console.WriteLine($"To do list saved successfully as {savefile}.");
+            } catch (Exception e)
+            {
+                Console.WriteLine($"Saving {savefile} failed with error {e}");
+            }
             break;
         }
     }
