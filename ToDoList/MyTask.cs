@@ -12,8 +12,7 @@ namespace ToDoList
     public class MyToDoList
     {
         public List<MyTask> Tasks { get; set; } = new List<MyTask>();
-        public string SortStyle;
-   
+ 
         public void ShowTaskList()//Shows to-do list
         {
             if (!Tasks.Any())
