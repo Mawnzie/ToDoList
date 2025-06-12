@@ -102,7 +102,8 @@ optionscreen:
             Console.WriteLine("Enter the name of the task to be edited:");
             
             string task = Console.ReadLine();
-            if (list.Tasks.Exists(x => x.Name == task)){
+            var targetTask = list.Tasks.Find(x => x.Name == task);
+            if (targetTask != null){
 
 
                 Console.WriteLine("Which field whould you like to edit:\n");
@@ -118,7 +119,7 @@ optionscreen:
 
                     case '1':
                         Console.WriteLine("Enter the new name you would like to give the task:");
-                        list.Tasks.Find(x => x.Name == task).Name = Console.ReadLine();
+                        targetTask.Name = Console.ReadLine();
                         break;
                     case '2':
                         Console.WriteLine("\nEnter the new due date(MM/dd/yyyy):\n");
@@ -129,12 +130,12 @@ optionscreen:
                             Console.WriteLine("\nWrong input, please try again.\n");
                             enteredString = Console.ReadLine();
                         }
-                        list.Tasks.Find(x => x.Name == task).DueDate = dueDate;
+                        targetTask.DueDate = dueDate;
                         break;
                     case '3':
                         Console.WriteLine("\nEnter the new Project name:");
                         enteredString = Console.ReadLine();
-                        list.Tasks.Find(x => x.Name == task).Project = enteredString;
+                        targetTask.Project = enteredString;
                         break;
                     case '4':
                         Console.WriteLine("\nSet project as (1) 'Done' or (2) 'NotDone':");
@@ -143,11 +144,11 @@ optionscreen:
 
                         if (statuskey == '1')
                         {
-                            list.Tasks.Find(x => x.Name == task).Status = ToDoListStatus.Done;
+                            targetTask.Status = ToDoListStatus.Done;
                         }
                         else if (statuskey == '2')
                         {
-                            list.Tasks.Find(x => x.Name == task).Status = ToDoListStatus.NotDone;
+                            targetTask.Status = ToDoListStatus.NotDone;
                         }
                         else
                         {
@@ -159,7 +160,7 @@ optionscreen:
                     case '5':
                         try
                         {
-                            list.Tasks.RemoveAll(x => x.Name == task);
+                            list.Tasks.Remove(targetTask);
                             Console.WriteLine($"Task with name {task} removed.");
                         } catch (Exception e) { Console.WriteLine(e.ToString()); }
                         break;

@@ -33,23 +33,29 @@ namespace ToDoList
         public void AddTask()
         {   
             Console.WriteLine("\nPlease enter the name of the task:\n");
+        AddTask:
             string? name = Console.ReadLine();
-            Console.WriteLine("\nEnter the due date(MM/dd/yyyy):\n");
-            string? enteredString = Console.ReadLine();
-            DateTime dueDate;
-            while (!DateTime.TryParse(enteredString, out dueDate))
+            if (!Tasks.Exists(x => x.Name == name)){
+                Console.WriteLine("\nEnter the due date(MM/dd/yyyy):\n");
+                string? enteredString = Console.ReadLine();
+                DateTime dueDate;
+                while (!DateTime.TryParse(enteredString, out dueDate))
+                {
+                    Console.WriteLine("\nWrong input, please try again.\n");
+                    enteredString = Console.ReadLine();
+                }
+
+
+                Console.WriteLine("\nPlease enter the name of the Project:\n");
+                string? project = Console.ReadLine();
+
+                Tasks.Add(new MyTask(name, dueDate, project));
+                Console.WriteLine("\nTask succesfully added to To-do list\n");
+            } else
             {
-                Console.WriteLine("\nWrong input, please try again.\n");
-                enteredString = Console.ReadLine();
+                Console.WriteLine($"\nThe task {name} already exists. Please choose another name for the task:\n");
+                goto AddTask;
             }
-    
-
-            Console.WriteLine("\nPlease enter the name of the Project:\n");
-            string? project = Console.ReadLine();
-
-            Tasks.Add(new MyTask(name, dueDate, project));
-            Console.WriteLine("\nTask succesfully added to To-do list\n");
-
 
         }
      
